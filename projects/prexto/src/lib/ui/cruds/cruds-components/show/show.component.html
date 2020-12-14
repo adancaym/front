@@ -1,0 +1,64 @@
+<div class="card" *ngIf="entity!= null">
+  <div class="card-body">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-6">
+          <b>
+            {{entity.getPropertie(entity.visibleField)}}
+          </b>
+        </div>
+        <div class="col-6">
+          <span class="float-right">
+            Creado: {{model.createdAt |date}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="card-content">
+      <div class="table-responsive">
+        <table class="table table-sm table-striped table-hover">
+          <thead>
+          <tr>
+            <th class="text-center" colspan="2">Detalle</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let header of entity.getHeaders()">
+            <ng-container *ngIf="header.name != 'createdAt' && header.name != 'updatedAt' && header.name != 'id' ">
+              <th>
+                {{header.tag}}
+              </th>
+              <ng-container [ngSwitch]="header.type" >
+                <td *ngSwitchCase="'text'">
+                   {{entity.getPropertie(header.name)}} <br>
+                </td>
+                <td *ngSwitchCase="'email'">
+                   {{entity.getPropertie(header.name)}} <br>
+                </td>
+                <td *ngSwitchCase="'foreignkey'">
+                  <ng-container *ngIf="isEntity(header.name)">
+                    {{getEntity(header.name).getPropertie(getEntity(header.name).visibleField)}}
+                  </ng-container>
+                </td>
+                <td *ngSwitchDefault>
+                <pre>
+                  {{header|json}}
+                </pre>
+                </td>
+              </ng-container>
+            </ng-container>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div class="card-footer">
+      <div class="row">
+        <div class="col-12">
+          <span class="float-right">Actualizado: {{model.updatedAt | date}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

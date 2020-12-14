@@ -1,0 +1,11 @@
+<lib-navbar *ngIf="menus.length > 0"
+  #navigation
+  [title]="system.system"
+  [menus]="menus"
+></lib-navbar>
+
+<ng-container [ngSwitch]="system.system">
+  <front-sendengo *ngSwitchCase="'sendengo'"></front-sendengo>
+  <front-ecommerce *ngSwitchCase="'ecommerce'"></front-ecommerce>
+  <front-avales *ngSwitchCase="'avales'"></front-avales>
+</ng-container>

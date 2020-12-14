@@ -1,0 +1,17 @@
+<h3>
+  Tablas
+</h3>
+<div *ngIf="permisos != null" class="row">
+  <ng-container *ngFor="let permiso of permisos.getModel().permisions">
+    <div class="card col-2 h-50"  *ngIf="permiso.getEntity().getModel().action =='index'" >
+      <div class="card-content">
+        <a [routerLink]="permiso.getEntity().getModel().table.getEntity().getModel().tablePlural.toLowerCase()">
+          {{permiso.getEntity().getModel().table.getEntity().getModel().tablePlural}}
+        </a>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+
+

@@ -1,0 +1,76 @@
+.loanbox
+  padding: 24px 32px
+  text-align: center
+
+  .field
+    .icon
+      color: $white
+    .button
+      background: none
+      color: $white
+      border: 0
+      font-size: 40px
+
+    input
+      background: none
+      border: 0
+      box-shadow: none
+      caret-color: rgba($white, .7)
+      color: $white
+      font-size: 40px
+
+      &::placeholder
+        color: rgba($white, .3)
+
+      &:hover, &:focus
+        border: 0
+        outline: none
+        box-shadow: none
+
+  &__amount
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.5) 10%, rgba(255, 255, 255, 0) 0%)
+    background-position: bottom
+    background-size: 4px 1px
+    background-repeat: repeat-x
+
+    > *
+      display: inline-block
+
+    &__label
+
+      &--sm
+        font-size: 12px
+        line-height: 85px
+        text-transform: uppercase
+        position: relative
+        top: -10px
+        opacity: 0.5
+
+      &--lg
+        font-size: 54px
+        line-height: 85px
+
+    &__value
+      font-size: 54px
+      padding: 0
+      margin: 0 8px 0 4px
+      border: none
+      display: inline-block
+      background: transparent
+      line-height: 85px
+      color: inherit
+      font-weight: 500
+      width: 180px
+
+      &::placeholder
+        color: rgba( $w, .50 )
+
+  &__tooltip
+    font-size: 13px
+    line-height: 15px
+
+    > div
+      display: none
+
+    .visible
+      display: block

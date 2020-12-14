@@ -2,5 +2,194 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "projects": {}
+  "projects": {
+    "front": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "sass"
+        }
+      },
+      "root": "projects/front",
+      "sourceRoot": "projects/front/src",
+      "prefix": "front",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/front",
+            "index": "projects/front/src/index.html",
+            "main": "projects/front/src/main.ts",
+            "polyfills": "projects/front/src/polyfills.ts",
+            "tsConfig": "projects/front/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/front/src/favicon.ico",
+              "projects/front/src/assets"
+            ],
+            "styles": [
+              "projects/front/src/styles.sass",
+              "node_modules/cropperjs/dist/cropper.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css"
+
+            ],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.js",
+              "./node_modules/jquery/dist/jquery.js",
+              "./node_modules/popper.js/dist/umd/popper.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.js",
+              "./node_modules/cropperjs/dist/cropper.js",
+              "./node_modules/pusher-js/dist/web/pusher.min.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/front/src/environments/environment.ts",
+                  "with": "projects/front/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "front:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "front:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "front:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/front/src/test.ts",
+            "polyfills": "projects/front/src/polyfills.ts",
+            "tsConfig": "projects/front/tsconfig.spec.json",
+            "karmaConfig": "projects/front/karma.conf.js",
+            "assets": [
+              "projects/front/src/favicon.ico",
+              "projects/front/src/assets"
+            ],
+            "styles": [
+              "projects/front/src/styles.sass"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/front/tsconfig.app.json",
+              "projects/front/tsconfig.spec.json",
+              "projects/front/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/front/e2e/protractor.conf.js",
+            "devServerTarget": "front:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "front:serve:production"
+            }
+          }
+        }
+      }
+    },
+    "prexto": {
+      "projectType": "library",
+      "root": "projects/prexto",
+      "sourceRoot": "projects/prexto/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/prexto/tsconfig.lib.json",
+            "project": "projects/prexto/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/prexto/src/environments/environment.ts",
+                  "with": "projects/prexto/src/environments/environment.prod.ts"
+                }
+              ],
+              "tsConfig": "projects/prexto/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/prexto/src/test.ts",
+            "tsConfig": "projects/prexto/tsconfig.spec.json",
+            "karmaConfig": "projects/prexto/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/prexto/tsconfig.lib.json",
+              "projects/prexto/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": false
+  },
+  "defaultProject": "front",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "sass"
+    }
+  }
 }

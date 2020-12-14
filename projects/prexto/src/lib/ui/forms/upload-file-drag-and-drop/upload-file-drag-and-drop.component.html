@@ -1,0 +1,43 @@
+<div class="center">
+  <ngx-file-drop dropZoneLabel="Drop files here"
+                 (onFileDrop)="dropped($event)"
+                 [accept]="accept"
+  >
+    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+      <button type="button" class="btn btn-green-modal text-black-50" (click)="openFileSelector()">
+        Seleccionar archivo
+      </button>
+    </ng-template>
+  </ngx-file-drop>
+  <ngb-progressbar *ngIf="showProgressBar" [max]="files.length" [value]="progress" ></ngb-progressbar>
+  <div class="upload-table table-responsive mt-5" *ngIf="arrayModelFileApi.length > 0 && showTable">
+    <table class="table table-sm table-striped table-bordered">
+      <thead class="bg-dark text-white">
+      <tr>
+        <th>Nombre del archivo</th>
+        <th>Extención</th>
+        <th>Tamaño</th>
+        <th>Fecha de carga</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody class="upload-name-style">
+      <tr *ngFor="let file of arrayModelFileApi">
+        <td>{{ file.name }}</td>
+        <td>{{ file.ext }}</td>
+        <td>{{ file.size / 1024 / 1024 | number: '1.2-2'}} mb</td>
+        <td>{{ file.createdAt | date }}</td>
+        <td>
+          <span class="fa fa-trash btn-xm btn btn-danger float-right" (click)="remove(file)"></span>
+          <lib-modal-boolean
+            title="Verifica que el documento se haya cargado correctamente"
+            textButton=""
+            classButton="text-white btn btn-info fa fa-eye float-right btn-xm">
+            <lib-iframe [url]="controllerFileInternal.getUrlByIdFile(file.id)"></lib-iframe>
+          </lib-modal-boolean>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

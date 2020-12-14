@@ -1,0 +1,30 @@
+<div class="form" *ngIf="entity!= null">
+  <form  [formGroup]="formEntity" (ngSubmit)="guardar(formEntity.value)">
+    <div *ngFor="let header of headers" class="form-group">
+      <ng-container *ngIf="
+      header.name != 'id' &&
+      header.name != 'createdAt' &&
+      header.name != 'updatedAt' &&
+      header.type != 'password'
+      "
+      >
+        <ng-container *ngIf="header.type != 'object' && header.type != 'foreignkey' && header.type != 'password'">
+          <label class="label" [for]="header.tag">{{header.tag | uppercase}}</label>
+          <input class="form-control" [type]="header.type" [formControlName]="header.name">
+        </ng-container>
+        <ng-container *ngIf="header.type == 'foreignkey' && getRows(header.name).length > 0">
+          <label class="label" [for]="header.tag">{{header.tag | uppercase}}</label>
+          <select class="form-control"  [formControlName]="header.name">
+            <ng-container *ngFor="let fk of getRows(header.name)"  >
+              <option  [value]="fk.getPropertie('id')">{{fk.getPropertie(fk.visibleField)}}</option>
+            </ng-container>
+          </select>
+        </ng-container>
+      </ng-container>
+    </div>
+    <div class="form-group">
+      <input type="submit" [disabled]="formEntity.invalid" value="Guardar">
+    </div>
+  </form>
+
+</div>

@@ -1,0 +1,85 @@
+<lib-navbar *ngIf="showNavBar === true" title="Prexto"></lib-navbar>
+<div class="mt-3 container-fluid">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-12">
+          <h3>{{controller.nameOfEntities}}</h3>
+          <a class="float-right btn btn-primary fa fa-plus" (click)="events('new',controller.getNew())"></a>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-text">
+        <div class="table-responsive">
+          <table class="table table-sm table-striped table-hover">
+            <thead>
+            <tr>
+              <ng-container *ngFor="let header of controller.getNew().getHeaders()">
+                <th *ngIf="header.type !== 'primary'">
+                  {{header.tag}}
+                </th>
+              </ng-container>
+              <th>
+                Acciones
+              </th>
+            </tr>
+            </thead>
+            <tbody *ngIf="controller.rows.length > 0 ">
+            <tr *ngFor="let row of controller.rows">
+              <ng-container *ngFor="let header of controller.getNew().getHeaders()" [ngSwitch]="header.type">
+                <td *ngIf="header.type != 'primary'" >
+                  <p *ngIf="header.type === 'date'">
+                    {{row.getPropertie(header.name) | date}}
+                  </p>
+                  <p *ngIf="header.type === 'primary'">
+                    {{row.getPropertie(header.name)}}
+                  </p>
+                  <div *ngIf="header.type === 'foreignkey'">
+                    <lib-modal-boolean
+                      *ngIf="isEntity(header.name, row)"
+                      classButton="fa fa-eye btn btn-warning"
+                      [title]="row.getPropertie(row.visibleField)"
+                      [textButton]="row.getPropertie(header.name).controller.nameOfEntity"
+                    >
+                      <lib-show [entity]="getEntity(header.name, row)"></lib-show>
+                    </lib-modal-boolean>
+                  </div>
+                  <p *ngIf="header.type === 'email'">
+                    {{row.getPropertie(header.name)}}
+                  </p>
+                  <p *ngIf="header.type === 'text'">
+                    {{row.getPropertie(header.name)}}
+                  </p>
+                  <p *ngIf="header.type === 'number'">
+                    {{row.getPropertie(header.name) | number}}
+                  </p>
+                  <p *ngIf="header.type === 'boolean'">
+                    <i class="badge badge-info">
+                      {{row.getPropertie(header.name) == true ? 'Si': 'No'}}
+                    </i>
+                  </p>
+                  <p *ngIf="header.type === 'array'">
+                    <i class="badge badge-info">
+                      {{row.getPropertie(header.name).length}}
+                    </i>
+                  </p>
+                </td>
+              </ng-container>
+              <td>
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" [id]="row.getModel().id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                  <div class="dropdown-menu" [attr.aria-labelledby]="row.getModel().id">
+                    <a class="dropdown-item" (click)="events('edit',row)"><i class="fa text-warning fa-pen"></i>Editar</a>
+                    <a class="dropdown-item" (click)="events('delete',row)"><i class="fa text-danger fa-times"></i>Eliminar</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

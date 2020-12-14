@@ -1,0 +1,3 @@
+
+<lib-not-found *ngIf="!url"></lib-not-found>
+<iframe *ngIf="url" [src]="url | safeUrl"></iframe>

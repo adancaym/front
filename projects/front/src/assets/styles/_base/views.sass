@@ -1,0 +1,73 @@
+.view
+  height: 100vh
+
+  &-white
+    background: $white
+
+  &-green
+    background: $primary
+
+  &-mamey
+    background: $mamey !important
+
+  &-grey
+    background: $light-grey
+
+  &-dark
+    background: $graphene
+
+    .title
+      color: $white
+    .subtitle
+      color: rgba($white, .5)
+
+  &-body
+    height: 100vh
+    padding: 0 6vw
+    overflow-y: auto
+    overflow-x: hidden
+
+  &-with-footer
+    height: 100vh
+
+    .view-body
+      height: 85vh
+
+    .view-footer
+      height: 15vh
+      padding: 0 6vw
+
+      display: flex
+      align-items: center
+
+  &-with-fullwidth-body
+
+    .view-body
+      padding: 0
+
+    .padded-section
+      padding: 0 6vw
+
+.title-section
+  padding: 6vh 3vw
+
+  .title
+    text-transform: uppercase
+
+@media (min-width: 769px)
+  .view
+    max-width: 50vw
+    margin: 0 auto
+
+    &-body
+      padding: 0 3vw
+
+    &-with-footer
+
+      .view-footer
+        padding: 0 3vw
+
+    &-with-fullwidth-body
+
+      .padded-section
+        padding: 0 3vw
